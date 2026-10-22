@@ -1,0 +1,11 @@
+# SHADOW-X ULTIMATE - optional enhancements ONLY.
+#
+# The application is pure Python 3 standard library and runs correctly with
+# NOTHING installed. Both packages below are cosmetic: the UI falls back to
+# hand-written ANSI escapes when they are missing, so `pip install` never has
+# to succeed for the toolkit to work.
+#
+#   python -m pip install -r requirements.txt      # optional
+
+rich>=13.0.0        # richer tables/panels/progress bars (fallback: plain ANSI)
+colorama>=0.4.6     # Windows console handling only (no effect on Termux/Kali)

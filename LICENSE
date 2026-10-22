@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Janrahat
+Copyright (c) 2026 SHADOW-X ULTIMATE contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+ADDITIONAL NOTICE ON LAWFUL USE
+
+This software performs active network checks (TCP connections, HTTP requests,
+DNS queries, TLS handshakes). Running such checks against systems you do not
+own, or do not have explicit written permission to test, may be a criminal
+offence under computer-misuse legislation (for example the Computer Fraud and
+Abuse Act, the UK Computer Misuse Act, or Pakistan's Prevention of Electronic
+Crimes Act).
+
+The licence above grants copyright permissions only. It does NOT grant
+permission to test, scan or access any third-party system. That permission must
+come from the system's owner.

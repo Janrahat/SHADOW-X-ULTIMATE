@@ -1,0 +1,26 @@
+{
+  "animations": true,
+  "api_integrations": {
+    "shodan_key": "",
+    "virustotal_key": ""
+  },
+  "banner": true,
+  "color": true,
+  "language": "en",
+  "log_level": "INFO",
+  "max_redirects": 5,
+  "max_requests_per_run": 60,
+  "privacy": {
+    "log_retention_days": 30,
+    "store_access_logs": true
+  },
+  "rate_limit_per_second": 3.0,
+  "report_dir": "reports",
+  "theme": "cyberpunk",
+  "timeout": 8,
+  "web_server": {
+    "base_url": "",
+    "enabled": false,
+    "report_path": ""
+  }
+}
