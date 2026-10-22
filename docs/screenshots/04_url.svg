@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2018" height="1618" viewBox="0 0 2018 1618" role="img" aria-label="URL analyzer">
+<title>URL analyzer — real SHADOW-X ULTIMATE output</title>
+<rect width="2018" height="1618" rx="10" fill="#0a0f18"/>
+<style>text{font-family:ui-monospace,SFMono-Regular,Menlo,"DejaVu Sans Mono",monospace;font-size:14px;letter-spacing:0}</style>
+<rect x="0.5" y="0.5" width="2017" height="1617" rx="10" fill="none" stroke="#2de2e6" stroke-opacity="0.34"/>
+<rect width="2018" height="38" rx="10" fill="#131b28"/>
+<rect y="28" width="2018" height="10" fill="#131b28"/>
+<line x1="0" y1="38" x2="2018" y2="38" stroke="#2de2e6" stroke-opacity="0.22"/>
+<circle cx="20" cy="19" r="5.5" fill="#ff5f57"/>
+<circle cx="39" cy="19" r="5.5" fill="#febc2e"/>
+<circle cx="58" cy="19" r="5.5" fill="#28c840"/>
+<text x="80" y="24" font-size="12.5" font-weight="700" letter-spacing="1.4" fill="#7de9ec">SHADOW-X ULTIMATE</text>
+<rect x="1692.9" y="8" width="309.1" height="22" rx="5" fill="#0a1218" stroke="#2de2e6" stroke-opacity="0.16"/>
+<text x="1701.9" y="23" font-size="11.5" fill="#587a86">$ python3 main.py url https://example.com</text>
+<text x="22" y="93" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; url_analyzer :: MEDIUM</tspan></text>
+<text x="22" y="112" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="132" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">Report ID </tspan><tspan fill="#d7e2ea"> : SX-20261022-100716-20FE44</tspan></text>
+<text x="22" y="151" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">Target    </tspan><tspan fill="#d7e2ea"> : https://example.com</tspan></text>
+<text x="22" y="170" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">Generated </tspan><tspan fill="#d7e2ea"> : 2026-10-22T10:07:16Z</tspan></text>
+<text x="22" y="189" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">Risk score</tspan><tspan fill="#d7e2ea"> : 0/100</tspan></text>
+<text x="22" y="208" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">Findings  </tspan><tspan fill="#d7e2ea"> : info=1, low=1, medium=1</tspan></text>
+<text x="22" y="247" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; URL Structure</tspan></text>
+<text x="22" y="266" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="285" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">scheme      </tspan><tspan fill="#d7e2ea"> : https</tspan></text>
+<text x="22" y="304" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">hostname    </tspan><tspan fill="#d7e2ea"> : example.com</tspan></text>
+<text x="22" y="324" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">port        </tspan><tspan fill="#d7e2ea"> : 443</tspan></text>
+<text x="22" y="343" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">path        </tspan><tspan fill="#d7e2ea"> : /</tspan></text>
+<text x="22" y="362" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">query       </tspan><tspan fill="#d7e2ea"> : </tspan></text>
+<text x="22" y="381" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">fragment    </tspan><tspan fill="#d7e2ea"> : </tspan></text>
+<text x="22" y="400" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">has_userinfo</tspan><tspan fill="#d7e2ea"> : False</tspan></text>
+<text x="22" y="420" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">query_params</tspan><tspan fill="#d7e2ea"> : {}</tspan></text>
+<text x="22" y="458" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; DNS Resolution</tspan></text>
+<text x="22" y="477" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="496" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">a       </tspan><tspan fill="#d7e2ea"> : [&quot;104.20.23.154&quot;, &quot;172.66.147.243&quot;]</tspan></text>
+<text x="22" y="516" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">aaaa    </tspan><tspan fill="#d7e2ea"> : [&quot;2606:4700:10::6814:179a&quot;, &quot;2606:4700:10::ac42:93f3&quot;]</tspan></text>
+<text x="22" y="535" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">ptr     </tspan><tspan fill="#d7e2ea"> : {&quot;104.20.23.154&quot;: [], &quot;172.66.147.243&quot;: [], &quot;2606:4700:10::6814:179a&quot;: [], &quot;2606:4700:10::ac42:93f3&quot;: []}</tspan></text>
+<text x="22" y="554" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">error   </tspan><tspan fill="#d7e2ea"> : None</tspan></text>
+<text x="22" y="573" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">resolved</tspan><tspan fill="#d7e2ea"> : [&quot;172.66.147.243&quot;, &quot;104.20.23.154&quot;, &quot;2606:4700:10::ac42:93f3&quot;, &quot;2606:4700:10::6814:179a&quot;]</tspan></text>
+<text x="22" y="612" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; Redirect Chain</tspan></text>
+<text x="22" y="631" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="650" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">hops </tspan><tspan fill="#d7e2ea"> : 1</tspan></text>
+<text x="22" y="669" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">chain</tspan><tspan fill="#d7e2ea"> : [{&quot;url&quot;: &quot;https://example.com&quot;, &quot;status&quot;: 200, &quot;elapsed_ms&quot;: 17, &quot;error&quot;: null}]</tspan></text>
+<text x="22" y="708" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; HTTP Response</tspan></text>
+<text x="22" y="727" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="746" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">status    </tspan><tspan fill="#d7e2ea"> : 200</tspan></text>
+<text x="22" y="765" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">reason    </tspan><tspan fill="#d7e2ea"> : OK</tspan></text>
+<text x="22" y="784" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">elapsed_ms</tspan><tspan fill="#d7e2ea"> : 17</tspan></text>
+<text x="22" y="804" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">headers   </tspan><tspan fill="#d7e2ea"> : {&quot;Date&quot;: &quot;Thu, 22 Oct 2026 10:07:16 GMT&quot;, &quot;Content-Type&quot;: &quot;text/html; charset=utf-8&quot;, &quot;Transfer-Encoding&quot;: &quot;chunked&quot;, &quot;Connection&quot;: &quot;close&quot;, &quot;Server&quot;: &quot;cloudflare&quot;, &quot;last-modified&quot;: &quot;Wed, 21 Oct 2026 20:09:25 GMT&quot;, &quot;a...</tspan></text>
+<text x="22" y="823" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">error     </tspan><tspan fill="#d7e2ea"> : None</tspan></text>
+<text x="22" y="861" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; Security Headers</tspan></text>
+<text x="22" y="880" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="900" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">present</tspan><tspan fill="#d7e2ea"> : {}</tspan></text>
+<text x="22" y="919" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">missing</tspan><tspan fill="#d7e2ea"> : [&quot;HSTS&quot;, &quot;CSP&quot;, &quot;X-Content-Type-Options&quot;, &quot;X-Frame-Options&quot;, &quot;Referrer-Policy&quot;, &quot;Permissions-Policy&quot;]</tspan></text>
+<text x="22" y="957" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; Security Headers</tspan></text>
+<text x="22" y="976" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="996" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ffff00" font-weight="700">[!]</tspan><tspan fill="#d7e2ea"> MEDIUM   Missing security headers</tspan></text>
+<text x="22" y="1015" xml:space="preserve"><tspan fill="#d7e2ea">       </tspan><tspan fill="#808080">Not set: HSTS, CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy</tspan></text>
+<text x="22" y="1034" xml:space="preserve"><tspan fill="#d7e2ea">       -&gt; </tspan><tspan fill="#ffff00">Add the missing headers at the web server or CDN layer.</tspan></text>
+<text x="22" y="1053" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#00ff00" font-weight="700">[+]</tspan><tspan fill="#d7e2ea"> LOW      Server banner exposed</tspan></text>
+<text x="22" y="1072" xml:space="preserve"><tspan fill="#d7e2ea">       </tspan><tspan fill="#808080">Server: cloudflare</tspan></text>
+<text x="22" y="1092" xml:space="preserve"><tspan fill="#d7e2ea">       -&gt; </tspan><tspan fill="#ffff00">Reduce version disclosure in the Server header.</tspan></text>
+<text x="22" y="1130" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; TLS Certificate</tspan></text>
+<text x="22" y="1149" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="1168" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">subject   </tspan><tspan fill="#d7e2ea"> : [&quot;commonName=example.com&quot;]</tspan></text>
+<text x="22" y="1188" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">issuer    </tspan><tspan fill="#d7e2ea"> : [&quot;countryName=US&quot;, &quot;organizationName=SSL Corporation&quot;, &quot;commonName=Cloudflare TLS Issuing ECC CA 3&quot;]</tspan></text>
+<text x="22" y="1207" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">version   </tspan><tspan fill="#d7e2ea"> : 3</tspan></text>
+<text x="22" y="1226" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">serial    </tspan><tspan fill="#d7e2ea"> : 01EEE6AABB521D5E14FC315FD9985690</tspan></text>
+<text x="22" y="1245" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">not_before</tspan><tspan fill="#d7e2ea"> : Sep 26 22:49:11 2026 GMT</tspan></text>
+<text x="22" y="1264" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">not_after </tspan><tspan fill="#d7e2ea"> : Dec 25 22:56:35 2026 GMT</tspan></text>
+<text x="22" y="1284" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">san_dns   </tspan><tspan fill="#d7e2ea"> : [&quot;example.com&quot;, &quot;*.example.com&quot;]</tspan></text>
+<text x="22" y="1303" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">san_count </tspan><tspan fill="#d7e2ea"> : 2</tspan></text>
+<text x="22" y="1322" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">cipher    </tspan><tspan fill="#d7e2ea"> : TLS_AES_256_GCM_SHA384</tspan></text>
+<text x="22" y="1341" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#ff00ff">protocol  </tspan><tspan fill="#d7e2ea"> : TLSv1.3</tspan></text>
+<text x="22" y="1380" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; Verdict</tspan></text>
+<text x="22" y="1399" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="1418" xml:space="preserve"><tspan fill="#d7e2ea">  </tspan><tspan fill="#00ffff" font-weight="700">[i]</tspan><tspan fill="#d7e2ea"> INFO     No strong indicators detected</tspan></text>
+<text x="22" y="1437" xml:space="preserve"><tspan fill="#d7e2ea">       </tspan><tspan fill="#808080">The URL shows no significant structural warning signs in this check.</tspan></text>
+<text x="22" y="1456" xml:space="preserve"><tspan fill="#d7e2ea">       -&gt; </tspan><tspan fill="#ffff00">Absence of indicators is not proof of safety; stay cautious.</tspan></text>
+<text x="22" y="1495" xml:space="preserve"><tspan fill="#ff00ff" font-weight="700">&gt;&gt; Limitations</tspan></text>
+<text x="22" y="1514" xml:space="preserve"><tspan fill="#808080">----------------------------------------------------------------------------------------------</tspan></text>
+<text x="22" y="1533" xml:space="preserve"><tspan fill="#d7e2ea">  - A URL analysis inspects the link itself; it cannot prove the site&#x27;s intentions.</tspan></text>
+<text x="22" y="1552" xml:space="preserve"><tspan fill="#d7e2ea">  - No page content is executed or downloaded beyond the first 4 KB of the response.</tspan></text>
+<text x="22" y="1572" xml:space="preserve"><tspan fill="#d7e2ea">  - Reputation lookups require an optional API key and are skipped when unset.</tspan></text>
+<text x="22" y="1591" xml:space="preserve"><tspan fill="#d7e2ea">  - Private, loopback and link-local destinations are deliberately refused (SSRF guard).</tspan></text>
+</svg>
