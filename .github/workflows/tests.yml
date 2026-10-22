@@ -1,0 +1,73 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Deliberately does NOT install requirements.txt: the suite must pass on a
+      # bare standard library, because that is exactly what Termux users have.
+      - name: Show that no dependencies are needed
+        run: |
+          python -c "import importlib.util as u; print('rich present:', bool(u.find_spec('rich')))"
+          python --version
+
+      - name: Compile every module
+        run: python -m compileall -q core modules tests main.py
+
+      - name: Run the full test suite
+        env:
+          NO_COLOR: "1"
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Smoke-test the CLI
+        env:
+          NO_COLOR: "1"
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python main.py version
+          python main.py platform
+          python main.py dashboard
+          python main.py --help
+          python main.py config
+
+  stdlib-only:
+    name: Bare stdlib (no extras installed)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Confirm the app runs with nothing installed
+        env:
+          NO_COLOR: "1"
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -c "
+          from core.ui import RICH_AVAILABLE, UI
+          ui = UI(theme='matrix', color=False, animations=False, banner=False)
+          ui.notify('fallback UI ok', 'ok')
+          print('RICH_AVAILABLE =', RICH_AVAILABLE)
+          "
+          python main.py dashboard
