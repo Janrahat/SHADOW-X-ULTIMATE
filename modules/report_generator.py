@@ -1,0 +1,339 @@
+"""Professional reporting engine: JSON, TXT and standalone HTML.
+
+Every export runs the credential-redaction pass first, so a report can never
+leak an Authorization header, cookie or API key even if a module captured one.
+"""
+from __future__ import annotations
+
+import html
+import json
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+from core.models import TOOL_NAME, TOOL_VERSION, Report, RiskLevel
+from core.security import redact_structure, redact_text, safe_filename
+
+SEVERITY_ORDER = ["critical", "high", "medium", "low", "info"]
+
+SEVERITY_COLORS = {
+    "critical": "#ff2d55",
+    "high": "#ff8c1a",
+    "medium": "#ffd60a",
+    "low": "#30d158",
+    "info": "#64d2ff",
+}
+
+FORMATS = ("json", "txt", "html")
+
+
+def _slug(report: Report) -> str:
+    target = report.target or report.module
+    return safe_filename("{}-{}".format(report.module, target), fallback="report")
+
+
+def report_paths(report: Report, directory: Path, export_all: bool = False, fmt: str = "json") -> List[Path]:
+    """Compute output paths. A report id keeps each run unique on disk."""
+    directory = Path(directory)
+    stem = "{}-{}".format(_slug(report), report.report_id.split("-")[-1])
+    formats = list(FORMATS) if export_all else [str(fmt).lower()]
+    paths: List[Path] = []
+    for suffix in formats:
+        if suffix not in FORMATS:
+            raise ValueError("unsupported format {!r} (use json, txt or html)".format(fmt))
+        paths.append(directory / "{}.{}".format(stem, suffix))
+    return paths
+
+
+# ---------------------------------------------------------------------------
+# JSON
+# ---------------------------------------------------------------------------
+def to_json(report: Report, indent: int = 2) -> str:
+    payload = redact_structure(report.to_dict())
+    return json.dumps(payload, indent=indent, ensure_ascii=False, sort_keys=False)
+
+
+# ---------------------------------------------------------------------------
+# TXT
+_TXT_WIDTH = 78
+
+
+def _line(char: str = "=", width: int = _TXT_WIDTH) -> str:
+    return char * width
+
+
+def _wrap(text: str, indent: int = 4, width: int = _TXT_WIDTH) -> List[str]:
+    words = str(text).split()
+    lines: List[str] = []
+    current = " " * indent
+    for word in words:
+        if len(current) + len(word) + 1 > width:
+            lines.append(current)
+            current = " " * indent + word
+        else:
+            current = current + word + " " if current.strip() else " " * indent + word + " "
+    if current.strip():
+        lines.append(current.rstrip())
+    return lines or [" " * indent]
+
+
+def to_text(report: Report) -> str:
+    data = redact_structure(report.to_dict())
+    out: List[str] = []
+    out.append(_line("="))
+    out.append("{} v{}  ::  {}".format(TOOL_NAME, TOOL_VERSION, data["module"].upper()))
+    out.append(_line("="))
+    out.append("Report ID : {}".format(data["report_id"]))
+    out.append("Generated : {}".format(data["created_at"]))
+    out.append("Target    : {}".format(data["target"] or "n/a"))
+    out.append("Risk      : {} ({}/100)".format(
+        str(data["overall_risk"]).upper(), data["risk_score"]))
+    counts = data.get("counts", {})
+    out.append("Findings  : " + ", ".join(
+        "{}={}".format(level, counts.get(level, 0)) for level in SEVERITY_ORDER
+    ))
+    out.append(_line())
+
+    for section in data.get("sections", []):
+        out.append("")
+        out.append("-- {} {}".format(section["title"].upper(), _line("-", max(4, _TXT_WIDTH - len(section["title"]) - 4))))
+        findings = section.get("findings", [])
+        if findings:
+            for index, finding in enumerate(findings, start=1):
+                out.append("  [{}] {} ({})".format(
+                    index, finding["title"], finding["severity"].upper()))
+                if finding.get("detail"):
+                    out.extend(_wrap(finding["detail"], indent=7))
+                if finding.get("recommendation"):
+                    out.append("       -> fix:")
+                    out.extend(_wrap(finding["recommendation"], indent=10))
+        else:
+            out.append("  No findings recorded.")
+
+        section_data = section.get("data") or {}
+        if section_data:
+            out.append("  data:")
+            for key, value in section_data.items():
+                rendered = json.dumps(value, ensure_ascii=False) if isinstance(value, (dict, list)) else str(value)
+                if len(rendered) > 100:
+                    rendered = rendered[:97] + "..."
+                out.append("    {:<22}: {}".format(str(key)[:22], rendered))
+
+    if not data.get("sections"):
+        out.append("")
+        out.append("  No findings recorded.")
+
+    limitations = data.get("limitations") or []
+    if limitations:
+        out.append("")
+        out.append(_line("-"))
+        out.append("LIMITATIONS")
+        for item in limitations:
+            out.extend(_wrap("- " + str(item), indent=2))
+
+    out.append("")
+    out.append(_line("="))
+    out.append("Generated by {} v{} - authorized defensive testing only.".format(
+        TOOL_NAME, TOOL_VERSION))
+    out.append(_line("="))
+    return "\n".join(out) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# HTML
+_HTML_CSS = """
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 28px; background: #05070a; color: #d7e3ee;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; line-height: 1.5; }
+.wrap { max-width: 1040px; margin: 0 auto; }
+h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: 2px; color: #00e5ff;
+  text-shadow: 0 0 18px rgba(0,229,255,.45); }
+.sub { color: #6b7f92; font-size: 12px; letter-spacing: 1px; margin-bottom: 22px; }
+.meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px; margin-bottom: 26px; }
+.card { background: #0b1118; border: 1px solid #16232e; border-radius: 8px; padding: 12px 14px; }
+.card .k { font-size: 10px; text-transform: uppercase; letter-spacing: 1.4px; color: #6b7f92; }
+.card .v { font-size: 15px; color: #e8f4ff; margin-top: 4px; word-break: break-word; }
+.risk { font-weight: 700; letter-spacing: 1px; }
+section { margin-bottom: 26px; }
+h2 { font-size: 14px; letter-spacing: 1.6px; text-transform: uppercase; color: #00e5ff;
+  border-bottom: 1px solid #16232e; padding-bottom: 8px; margin: 0 0 14px; }
+.finding { background: #0b1118; border-left: 3px solid #2b3a47; border-radius: 6px;
+  padding: 12px 14px; margin-bottom: 10px; }
+.finding h3 { margin: 0 0 6px; font-size: 13px; color: #e8f4ff; font-weight: 600; }
+.badge { display: inline-block; font-size: 10px; letter-spacing: 1.2px; padding: 2px 8px;
+  border-radius: 999px; margin-right: 8px; text-transform: uppercase; font-weight: 700; }
+.finding p { margin: 6px 0 0; font-size: 12.5px; color: #9fb3c4; }
+.fix { color: #7ee787; font-size: 12.5px; margin-top: 6px; }
+.evidence { margin-top: 8px; background: #05070a; border-radius: 4px; padding: 8px 10px;
+  font-size: 11.5px; color: #8ba3b8; overflow-x: auto; white-space: pre-wrap; }
+.kvrow { display: flex; gap: 12px; font-size: 12.5px; padding: 4px 0;
+  border-bottom: 1px dotted #16232e; }
+.kvrow .kk { color: #6b7f92; min-width: 190px; flex: 0 0 190px; }
+.kvrow .vv { color: #d7e3ee; word-break: break-word; }
+.note { background: #14100a; border: 1px solid #3d2f10; border-radius: 8px;
+  padding: 12px 14px; color: #ffd60a; font-size: 12.5px; }
+footer { margin-top: 34px; padding-top: 14px; border-top: 1px solid #16232e;
+  color: #526475; font-size: 11px; }
+"""
+
+
+def _esc(value: Any) -> str:
+    return html.escape("" if value is None else str(value))
+
+
+def to_html(report: Report) -> str:
+    data = redact_structure(report.to_dict())
+    overall = str(data["overall_risk"]).lower()
+    overall_color = SEVERITY_COLORS.get(overall, "#64d2ff")
+    counts = data.get("counts", {})
+
+    parts: List[str] = []
+    parts.append("<!DOCTYPE html>")
+    parts.append('<html lang="en"><head><meta charset="utf-8">')
+    parts.append('<meta name="viewport" content="width=device-width, initial-scale=1">')
+    parts.append("<title>{} - {} report</title>".format(
+        _esc(TOOL_NAME), _esc(data["module"])))
+    parts.append("<style>{}</style></head><body><div class=\"wrap\">".format(_HTML_CSS))
+    parts.append("<h1>{} :: {}</h1>".format(_esc(TOOL_NAME), _esc(data["module"]).upper()))
+    parts.append('<div class="sub">v{} &nbsp;|&nbsp; report {} &nbsp;|&nbsp; {}</div>'.format(
+        _esc(data["version"]), _esc(data["report_id"]), _esc(data["created_at"])))
+
+    parts.append('<div class="meta">')
+    for label, value in (
+        ("Target", data["target"] or "n/a"),
+        ("Overall risk", '{} ({}/100)'.format(overall.upper(), data["risk_score"])),
+        ("Findings", sum(counts.values())),
+        ("Critical", counts.get("critical", 0)),
+        ("High", counts.get("high", 0)),
+        ("Medium", counts.get("medium", 0)),
+    ):
+        extra = " risk" if label == "Overall risk" else ""
+        style = ' style="color:{}"'.format(overall_color) if label == "Overall risk" else ""
+        parts.append(
+            '<div class="card"><div class="k">{}</div><div class="v{}"{}>{}</div></div>'.format(
+                _esc(label), extra, style, _esc(value)
+            )
+        )
+    parts.append("</div>")
+
+    for section in data.get("sections", []):
+        parts.append("<section><h2>{}</h2>".format(_esc(section["title"])))
+        section_data = section.get("data") or {}
+        for key, value in section_data.items():
+            rendered = json.dumps(value, ensure_ascii=False, indent=2) if isinstance(value, (dict, list)) else str(value)
+            parts.append(
+                '<div class="kvrow"><div class="kk">{}</div><div class="vv">{}</div></div>'.format(
+                    _esc(key), _esc(rendered)
+                )
+            )
+        for finding in section.get("findings", []):
+            severity = str(finding["severity"]).lower()
+            color = SEVERITY_COLORS.get(severity, "#64d2ff")
+            parts.append('<div class="finding" style="border-left-color:{}">'.format(color))
+            parts.append('<h3><span class="badge" style="background:{}22;color:{}">{}</span>{}</h3>'.format(
+                color, color, _esc(severity), _esc(finding["title"])))
+            if finding.get("detail"):
+                parts.append("<p>{}</p>".format(_esc(finding["detail"])))
+            if finding.get("recommendation"):
+                parts.append('<div class="fix">-> {}</div>'.format(_esc(finding["recommendation"])))
+            evidence = finding.get("evidence") or {}
+            if evidence:
+                parts.append('<div class="evidence">{}</div>'.format(
+                    _esc(json.dumps(evidence, ensure_ascii=False, indent=2))))
+            parts.append("</div>")
+        if not section.get("findings") and not section_data:
+            parts.append('<p class="sub">No findings recorded.</p>')
+        parts.append("</section>")
+
+    limitations = data.get("limitations") or []
+    if limitations:
+        parts.append('<section><h2>Limitations</h2><div class="note">')
+        for item in limitations:
+            parts.append("&bull; {}<br>".format(_esc(item)))
+        parts.append("</div></section>")
+
+    parts.append(
+        "<footer>Generated by {} v{} on {}. This report contains only "
+        "observations from authorized, non-intrusive checks. Credentials, cookies "
+        "and authorization headers are redacted automatically.</footer>".format(
+            _esc(TOOL_NAME), _esc(data["version"]), _esc(data["created_at"]))
+    )
+    parts.append("</div></body></html>")
+    return "\n".join(parts) + "\n"
+
+
+# ---------------------------------------------------------------------------
+# Public API
+RENDERERS = {"json": to_json, "txt": to_text, "html": to_html}
+
+
+def render(report: Report, fmt: str = "json") -> str:
+    renderer = RENDERERS.get(str(fmt).lower())
+    if renderer is None:
+        raise ValueError("unsupported format {!r}".format(fmt))
+    return renderer(report)
+
+
+def save(
+    report: Report,
+    directory: Path,
+    fmt: str = "json",
+    export_all: bool = False,
+    filename: Optional[str] = None,
+) -> List[Path]:
+    """Write one or all formats and return the paths created."""
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    written: List[Path] = []
+    if filename:
+        formats = list(FORMATS) if export_all else [fmt]
+        paths = [directory / "{}.{}".format(safe_filename(filename), suffix) for suffix in formats]
+        renders = [(path, suffix) for path, suffix in zip(paths, formats)]
+    else:
+        paths = report_paths(report, directory, export_all=export_all, fmt=fmt)
+        renders = [(path, path.suffix.lstrip(".")) for path in paths]
+    for path, suffix in renders:
+        path.write_text(render(report, suffix), encoding="utf-8")
+        written.append(path)
+    return written
+
+
+def summarize(report: Report) -> Dict[str, Any]:
+    """Compact summary used by dashboards and the CLI."""
+    return {
+        "report_id": report.report_id,
+        "module": report.module,
+        "target": report.target,
+        "created_at": report.created_at,
+        "risk": report.overall_risk.value,
+        "counts": report.count_by_severity(),
+        "findings": len(report.findings),
+    }
+
+
+def list_reports(directory: Path, limit: int = 10) -> List[Dict[str, Any]]:
+    """Most recent report files, newest first. Never raises."""
+    directory = Path(directory)
+    if not directory.is_dir():
+        return []
+    entries: List[Dict[str, Any]] = []
+    try:
+        files = [item for item in directory.iterdir() if item.is_file()]
+    except OSError:
+        return []
+    files.sort(key=lambda item: item.stat().st_mtime if item.exists() else 0, reverse=True)
+    for item in files[:limit]:
+        try:
+            stat = item.stat()
+        except OSError:
+            continue
+        entries.append(
+            {
+                "name": item.name,
+                "size": stat.st_size,
+                "modified": stat.st_mtime,
+                "path": str(item),
+            }
+        )
+    return entries
