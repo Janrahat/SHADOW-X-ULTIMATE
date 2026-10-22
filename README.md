@@ -6,11 +6,12 @@ utilities and professional reporting - from one shared Python codebase that
 detects its platform automatically.
 
 ```
-   ####  #     #  ###  ####  #     #     #   #  #   #
-  #      #     # #   # #   # #     #      # #    # #
-   ###   ####### ##### #   # #  #  #       #      #
-      #  #     # #   # #   # # # # #      # #    # #
- ####   #     # #   # ####   #   #  #    #   #  #   #
+███████╗██╗  ██╗ █████╗ ██████╗  ██████╗ ██╗    ██╗     ██╗  ██╗
+██╔════╝██║  ██║██╔══██╗██╔══██╗██╔═══██╗██║    ██║     ╚██╗██╔╝
+███████╗███████║███████║██║  ██║██║   ██║██║ █╗ ██║█████╗╚███╔╝
+╚════██║██╔══██║██╔══██║██║  ██║██║   ██║██║███╗██║╚════╝ ██╔██╗
+███████║██║  ██║██║  ██║██████╔╝╚██████╔╝╚███╔███╔╝      ██╔╝ ██╗
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝  ╚══╝╚══╝       ╚═╝  ╚═╝
 ```
 
 - **Zero required dependencies.** Pure Python 3 standard library. `rich` and
@@ -28,17 +29,18 @@ detects its platform automatically.
 ## Contents
 
 1. [What it does](#what-it-does)
-2. [Install on Termux](#install-on-termux-android)
-3. [Install on Kali Linux](#install-on-kali-linux)
-4. [Usage](#usage)
-5. [Example output](#example-output)
-6. [Themes and settings](#themes-and-settings)
-7. [Platform-specific limitations](#platform-specific-limitations)
-8. [Troubleshooting](#troubleshooting)
-9. [Tests](#tests)
-10. [Authorized use only](#authorized-use-only)
-11. [Project layout](#project-layout)
-12. [Licence](#licence)
+2. [Screenshots](#screenshots)
+3. [Install on Termux](#install-on-termux-android)
+4. [Install on Kali Linux](#install-on-kali-linux)
+5. [Usage](#usage)
+6. [Example output](#example-output)
+7. [Themes and settings](#themes-and-settings)
+8. [Platform-specific limitations](#platform-specific-limitations)
+9. [Troubleshooting](#troubleshooting)
+10. [Tests](#tests)
+11. [Authorized use only](#authorized-use-only)
+12. [Project layout](#project-layout)
+13. [Licence](#licence)
 
 ---
 
@@ -56,6 +58,28 @@ detects its platform automatically.
 
 Everything is **read-only and non-intrusive**: no exploitation, no credential
 attacks, no persistence, no detection evasion. There is no code path for those.
+
+---
+
+## Screenshots
+
+Real output, not mockups. Each image is an SVG rendering of an actual CLI run:
+the raw ANSI stream was captured from the tool and every colour you see comes
+from the escape codes it emitted. Text is real terminal text, so it stays crisp
+at any zoom (and you can select it).
+
+| | |
+|---|---|
+| [![Startup banner and platform detection](docs/screenshots/01_startup.svg)](docs/screenshots/01_startup.svg)<br>**Startup banner & platform detection** | [![Main dashboard](docs/screenshots/02_dashboard.svg)](docs/screenshots/02_dashboard.svg)<br>**Main dashboard** |
+| [![Interactive main menu](docs/screenshots/03_menu.svg)](docs/screenshots/03_menu.svg)<br>**Interactive main menu** | [![URL analyzer](docs/screenshots/04_url.svg)](docs/screenshots/04_url.svg)<br>**URL analyzer** |
+| [![Domain intelligence](docs/screenshots/05_domain.svg)](docs/screenshots/05_domain.svg)<br>**Domain intelligence** | [![Defensive toolbox](docs/screenshots/06_defensive.svg)](docs/screenshots/06_defensive.svg)<br>**Defensive toolbox** |
+
+Captured on Debian 12 with Python 3.11.15 at 96 columns. On Termux the header
+shows a Termux badge and fewer available capabilities — the layout and colours
+are identical.
+
+Browse them as a gallery page:
+**[shadow-x screenshots](https://static.teamily.ai/sites/b951304b-8be7-4365-99a5-8ebc8fb79e17/webpages/shadow-x-gallery/index.html)**.
 
 ---
 
