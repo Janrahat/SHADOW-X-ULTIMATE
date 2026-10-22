@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHADOW-X ULTIMATE — Terminal Screenshots</title>
+<style>
+  :root{--cyan:#2de2e6;--mag:#ff4dd2;--yellow:#ffd166;--bg:#04060a;--panel:#0a1018;--line:rgba(45,226,230,.20);--text:#cfdbe4;--dim:#7f95a3}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1100px 620px at 12% -6%,rgba(45,226,230,.12),transparent 60%),radial-gradient(900px 560px at 92% 4%,rgba(255,77,210,.10),transparent 62%),var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  header,main,footer{max-width:1180px;margin:0 auto;padding:0 26px}
+  header{padding-top:64px;padding-bottom:30px}
+  .kicker{display:inline-block;font-size:11.5px;letter-spacing:.30em;text-transform:uppercase;color:var(--cyan);border:1px solid var(--line);border-radius:999px;padding:6px 14px;margin-bottom:22px;background:rgba(45,226,230,.05)}
+  h1{margin:0 0 16px;font-size:clamp(30px,5vw,50px);line-height:1.06;letter-spacing:-.021em;font-weight:800;background:linear-gradient(96deg,#eafcff 6%,var(--cyan) 42%,var(--mag) 78%,var(--yellow) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{margin:0;max-width:74ch;font-size:16.5px;line-height:1.72;color:var(--dim)}
+  .lede strong{color:var(--text);font-weight:600}
+  .meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+  .meta span{font-size:12px;color:var(--dim);padding:6px 11px;border-radius:6px;background:var(--panel);border:1px solid rgba(255,255,255,.055);font-family:ui-monospace,monospace}
+  main{padding-top:10px;padding-bottom:90px}
+  .grid{display:grid;gap:34px}
+  .card{margin:0;border-radius:14px;overflow:hidden;background:var(--panel);border:1px solid rgba(255,255,255,.07);box-shadow:0 24px 60px rgba(0,0,0,.55);transition:border-color .22s,box-shadow .22s,transform .22s}
+  .card:hover{border-color:rgba(45,226,230,.42);box-shadow:0 26px 70px rgba(0,0,0,.62),0 0 42px rgba(45,226,230,.13);transform:translateY(-2px)}
+  .shot{background:#03070c;overflow-x:auto}
+  .shot img{display:block;width:100%;height:auto}
+  figcaption{padding:22px 24px 24px;border-top:1px solid var(--line)}
+  figcaption h2{margin:0 0 9px;font-size:16.5px;font-weight:700;color:#eafcff;letter-spacing:-.01em}
+  figcaption h2::before{content:"";display:inline-block;width:8px;height:8px;margin-right:10px;border-radius:2px;background:var(--cyan);vertical-align:2px;box-shadow:0 0 12px var(--cyan)}
+  figcaption p{margin:0 0 14px;font-size:14px;line-height:1.68;color:var(--dim)}
+  figcaption code{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--yellow);background:rgba(255,209,102,.07);padding:1px 5px;border-radius:4px}
+  footer{padding-bottom:74px;font-size:13px;line-height:1.75;color:var(--dim)}
+  footer .note{padding:20px 22px;border-radius:11px;background:var(--panel);border-left:3px solid var(--yellow)}
+  footer .note b{color:var(--yellow)}
+  @media(max-width:700px){header{padding-top:44px}main,footer,header{padding-left:18px;padding-right:18px}.grid{gap:24px}}
+</style>
+</head>
+<body>
+<header>
+  <span class="kicker">Terminal screenshots</span>
+  <h1>SHADOW-X ULTIMATE</h1>
+  <p class="lede">Every image below is a render of <strong>real output</strong> captured from the tool. The raw ANSI streams were recorded by running the CLI and converted to SVG with their escape codes intact — nothing here is a mockup or a hand-drawn fake terminal.</p>
+  <div class="meta">
+    <span>SHADOW-X ULTIMATE v1.0.0</span>
+    <span>captured on Debian 12 · Python 3.11.15</span>
+    <span>96-column terminal</span>
+    <span>theme: cyberpunk</span>
+  </div>
+</header>
+<main>
+<div class="grid">
+
+  <figure class="card">
+    <div class="shot"><img src="01_startup.svg" alt="Startup banner and platform detection" loading="lazy"></div>
+    <figcaption>
+      <h2>Startup banner &amp; platform detection</h2>
+      <p>The ASCII wordmark and the platform probe. Every capability is listed with a yes/no, including which optional binaries this host lacks — that is how the tool decides what to degrade instead of crashing.</p>
+      <code>$ python3 main.py platform</code>
+    </figcaption>
+  </figure>
+
+  <figure class="card">
+    <div class="shot"><img src="02_dashboard.svg" alt="Main dashboard" loading="lazy"></div>
+    <figcaption>
+      <h2>Main dashboard</h2>
+      <p>Version, detected OS, Python, live network state, disk and memory, module availability and saved reports — the first thing you see.</p>
+      <code>$ python3 main.py dashboard</code>
+    </figcaption>
+  </figure>
+
+  <figure class="card">
+    <div class="shot"><img src="03_menu.svg" alt="Interactive main menu" loading="lazy"></div>
+    <figcaption>
+      <h2>Interactive main menu</h2>
+      <p>The numbered dashboard menu. <code>0</code> exits, <code>r</code> refreshes, <code>h</code> returns home; invalid input is rejected without dropping the session.</p>
+      <code>$ python3 main.py</code>
+    </figcaption>
+  </figure>
+
+  <figure class="card">
+    <div class="shot"><img src="04_url.svg" alt="URL analyzer" loading="lazy"></div>
+    <figcaption>
+      <h2>URL analyzer</h2>
+      <p>Structure, DNS resolution, redirect chain, TLS and the risk score, with per-finding severity badges and remediation notes.</p>
+      <code>$ python3 main.py url https://example.com</code>
+    </figcaption>
+  </figure>
+
+  <figure class="card">
+    <div class="shot"><img src="05_domain.svg" alt="Domain intelligence" loading="lazy"></div>
+    <figcaption>
+      <h2>Domain intelligence</h2>
+      <p>A/AAAA/MX/NS/TXT records, WHOIS/RDAP, TLS certificate and SPF/DMARC checks, plus a low-risk finding for a missing DMARC reporting address.</p>
+      <code>$ python3 main.py domain example.com</code>
+    </figcaption>
+  </figure>
+
+  <figure class="card">
+    <div class="shot"><img src="06_defensive.svg" alt="Defensive toolbox" loading="lazy"></div>
+    <figcaption>
+      <h2>Defensive toolbox</h2>
+      <p>Password generator and the strength estimator: entropy in bits, search space, character classes and a human crack-time figure.</p>
+      <code>$ python3 main.py defensive</code>
+    </figcaption>
+  </figure>
+
+</div>
+</main>
+<footer>
+  <div class="note">
+    <b>Platform note.</b> These captures were taken on Debian Linux, not on an Android device. The tool detects Termux and adapts (no <code>traceroute</code> binary, no root, different interface enumeration), so a Termux run shows a Termux badge and fewer available capabilities — the layout and colours are identical. Only test systems you own or are explicitly authorized to test.
+  </div>
+</footer>
+</body>
+</html>
